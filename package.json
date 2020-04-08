@@ -28,6 +28,7 @@
     "react-syntax-highlighter": "^11.0.2",
     "react-toastify": "^5.3.2",
     "recharts": "^1.6.2",
+    "styled-components": "^5.1.0",
     "tinycolor2": "^1.4.1"
   },
   "eslintConfig": {

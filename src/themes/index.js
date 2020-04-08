@@ -1,4 +1,5 @@
-import defaultTheme from "./default";
+import muiTheme from "./material";
+import styledTheme from "./styled";
 
 import { createMuiTheme } from "@material-ui/core";
 
@@ -26,5 +27,6 @@ const overrides = {
 };
 
 export default {
-  default: createMuiTheme({ ...defaultTheme, ...overrides }),
+  mui: createMuiTheme({ ...muiTheme, ...overrides }),
+  styled: styledTheme,
 };

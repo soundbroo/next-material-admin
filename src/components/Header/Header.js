@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import {
   AppBar,
   Toolbar,
@@ -107,7 +108,7 @@ export default function Header(props) {
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
+      <AppToolbar className={classes.toolbar}>
         <IconButton
           color="inherit"
           onClick={() => toggleSidebar(layoutDispatch)}
@@ -342,7 +343,11 @@ export default function Header(props) {
             </Typography>
           </div>
         </Menu>
-      </Toolbar>
+      </AppToolbar>
     </AppBar>
   );
 }
+
+const AppToolbar = styled(Toolbar)`
+  background: ${(p) => p.theme.pallete.primary};
+`;
