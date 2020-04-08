@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import "font-awesome/css/font-awesome.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +17,7 @@ import { LayoutProvider } from "../context/LayoutContext";
 import { UserProvider } from "../context/UserContext";
 
 import Layout from "../components/Layout/Layout";
-import App from "../components/App";
+import Main from "../components/Main";
 
 const CustomApp = ({ Component, pageProps }) => {
   React.useEffect(() => {
@@ -28,28 +29,33 @@ const CustomApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const login = router.pathname === "/login";
   return (
-    <LayoutProvider>
-      <UserProvider>
-        <StylesProvider injectFirst>
-          <MuiThemeProvider theme={themes.mui}>
-            <CssBaseline />
-            <ThemeProvider theme={themes.styled}>
-              {!login ? (
-                <Layout>
-                  <App>
+    <>
+      <Head>
+        <title>Next material admin</title>
+      </Head>
+      <LayoutProvider>
+        <UserProvider>
+          <StylesProvider injectFirst>
+            <MuiThemeProvider theme={themes.mui}>
+              <CssBaseline />
+              <ThemeProvider theme={themes.styled}>
+                {!login ? (
+                  <Layout>
+                    <Main>
+                      <Component {...pageProps} />
+                    </Main>
+                  </Layout>
+                ) : (
+                  <Main>
                     <Component {...pageProps} />
-                  </App>
-                </Layout>
-              ) : (
-                <App>
-                  <Component {...pageProps} />
-                </App>
-              )}
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StylesProvider>
-      </UserProvider>
-    </LayoutProvider>
+                  </Main>
+                )}
+              </ThemeProvider>
+            </MuiThemeProvider>
+          </StylesProvider>
+        </UserProvider>
+      </LayoutProvider>
+    </>
   );
 };
 

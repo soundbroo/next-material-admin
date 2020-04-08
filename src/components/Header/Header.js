@@ -90,7 +90,7 @@ const notifications = [
   },
 ];
 
-export default function Header(props) {
+function Header(props) {
   var classes = useStyles();
 
   // global
@@ -108,7 +108,7 @@ export default function Header(props) {
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
-      <AppToolbar className={classes.toolbar}>
+      <AppToolbar>
         <IconButton
           color="inherit"
           onClick={() => toggleSidebar(layoutDispatch)}
@@ -348,6 +348,8 @@ export default function Header(props) {
   );
 }
 
+export default Header;
+
 const AppToolbar = styled(Toolbar)`
-  background: ${(p) => p.theme.pallete.primary};
+  background: ${(p) => `${p.theme.pallete.primary} !important`};
 `;

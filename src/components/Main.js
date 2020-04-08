@@ -5,7 +5,7 @@ import Router from "next/router";
 // context
 import { useUserState } from "../context/UserContext";
 
-export default function App({ children }) {
+export default function Main({ children }) {
   // global
   var { isAuthenticated } = useUserState();
 

@@ -4,6 +4,34 @@ import { ServerStyleSheets } from "@material-ui/core/styles";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const sheets = new ServerStyleSheets();
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(sheets.collect(<App {...props} />)),
+        });
+
+      const initialProps = await Document.getInitialProps(ctx);
+
+      return {
+        ...initialProps,
+        styles: [
+          <React.Fragment key="styles">
+            {initialProps.styles}
+            {sheets.getStyleElement()}
+            {sheet.getStyleElement()}
+          </React.Fragment>,
+        ],
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
   render() {
     return (
       <html lang="en">
@@ -16,25 +44,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-
-MyDocument.getInitialProps = async (ctx) => {
-  const sheets = new ServerStyleSheets();
-  const sheet = new ServerStyleSheet();
-  const originalRenderPage = ctx.renderPage;
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return {
-    ...initialProps,
-    styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
-      sheet.getStyleElement(),
-    ],
-  };
-};

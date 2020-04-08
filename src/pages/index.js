@@ -1,5 +1,5 @@
-import App from "../components/App";
+import Main from "../components/Main";
 
-const Index = () => <App />;
+const Index = () => <Main />;
 
 export default Index;
