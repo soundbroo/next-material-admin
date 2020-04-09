@@ -33,20 +33,53 @@ import Dot from "../../components/Sidebar/components/Dot";
 import Table from "../../components/Dashboard/Table/Table";
 import BigStat from "../../components/Dashboard/BigStat/BigStat";
 
-const mainChartData = getMainChartData();
-const PieChartData = [
-  { name: "Group A", value: 400, color: "primary" },
-  { name: "Group B", value: 300, color: "secondary" },
-  { name: "Group C", value: 300, color: "warning" },
-  { name: "Group D", value: 200, color: "success" },
-];
+import { dashPieChartData } from "../../constants";
 
-export default function Dashboard(props) {
-  var classes = useStyles();
-  var theme = useTheme();
+const Dashboard = (props) => {
+  const classes = useStyles();
+  const theme = useTheme();
 
   // local
-  var [mainChartState, setMainChartState] = useState("monthly");
+  const [mainChartState, setMainChartState] = useState("monthly");
+  const getRandomData = (length, min, max, multiplier = 10, maxDiff = 10) => {
+    const array = new Array(length).fill();
+    let lastValue;
+
+    return array.map((item, index) => {
+      let randomValue = Math.floor(Math.random() * multiplier + 1);
+
+      while (
+        randomValue <= min ||
+        randomValue >= max ||
+        (lastValue && randomValue - lastValue > maxDiff)
+      ) {
+        randomValue = Math.floor(Math.random() * multiplier + 1);
+      }
+
+      lastValue = randomValue;
+
+      return { value: randomValue };
+    });
+  };
+
+  const getMainChartData = () => {
+    const resultArray = [];
+    const tablet = getRandomData(31, 3500, 6500, 7500, 1000);
+    const desktop = getRandomData(31, 1500, 7500, 7500, 1500);
+    const mobile = getRandomData(31, 1500, 7500, 7500, 1500);
+
+    for (let i = 0; i < tablet.length; i++) {
+      resultArray.push({
+        tablet: tablet[i].value,
+        desktop: desktop[i].value,
+        mobile: mobile[i].value,
+      });
+    }
+
+    return resultArray;
+  };
+
+  const mainChartData = getMainChartData();
 
   return (
     <>
@@ -259,12 +292,12 @@ export default function Dashboard(props) {
                 <ResponsiveContainer width="100%" height={144}>
                   <PieChart margin={{ left: theme.spacing(2) }}>
                     <Pie
-                      data={PieChartData}
+                      data={dashPieChartData}
                       innerRadius={45}
                       outerRadius={60}
                       dataKey="value"
                     >
-                      {PieChartData.map((entry, index) => (
+                      {dashPieChartData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
                           fill={theme.palette[entry.color].main}
@@ -276,7 +309,7 @@ export default function Dashboard(props) {
               </Grid>
               <Grid item xs={6}>
                 <div className={classes.pieChartLegendWrapper}>
-                  {PieChartData.map(({ name, value, color }, index) => (
+                  {dashPieChartData.map(({ name, value, color }, index) => (
                     <div key={color} className={classes.legendItemContainer}>
                       <Dot color={color} />
                       <Typography style={{ whiteSpace: "nowrap" }}>
@@ -410,43 +443,6 @@ export default function Dashboard(props) {
       </Grid>
     </>
   );
-}
+};
 
-// #######################################################################
-function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
-  var array = new Array(length).fill();
-  let lastValue;
-
-  return array.map((item, index) => {
-    let randomValue = Math.floor(Math.random() * multiplier + 1);
-
-    while (
-      randomValue <= min ||
-      randomValue >= max ||
-      (lastValue && randomValue - lastValue > maxDiff)
-    ) {
-      randomValue = Math.floor(Math.random() * multiplier + 1);
-    }
-
-    lastValue = randomValue;
-
-    return { value: randomValue };
-  });
-}
-
-function getMainChartData() {
-  var resultArray = [];
-  var tablet = getRandomData(31, 3500, 6500, 7500, 1000);
-  var desktop = getRandomData(31, 1500, 7500, 7500, 1500);
-  var mobile = getRandomData(31, 1500, 7500, 7500, 1500);
-
-  for (let i = 0; i < tablet.length; i++) {
-    resultArray.push({
-      tablet: tablet[i].value,
-      desktop: desktop[i].value,
-      mobile: mobile[i].value,
-    });
-  }
-
-  return resultArray;
-}
+export default Dashboard;

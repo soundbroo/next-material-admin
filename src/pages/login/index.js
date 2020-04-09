@@ -9,17 +9,14 @@ import {
   TextField,
   Fade,
 } from "@material-ui/core";
-// import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 
 // styles
 import useStyles from "../../components/Login/styles";
 
-// ToDo: webpack ругается на отсутствие лоадера для svg
-
 // logo
-// import logo from "../../images/logo.svg";
-// import google from "../../images/google.svg";
+import Logo from "../../images/logo.svg";
+import Google from "../../images/google.svg";
 
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
@@ -41,7 +38,7 @@ function Login(props) {
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
-        {/* <img src={logo} alt="logo" className={classes.logotypeImage} /> */}
+        <Logo className={classes.logotypeImage} />
         <Typography className={classes.logotypeText}>Material Admin</Typography>
       </div>
       <div className={classes.formContainer}>
@@ -240,7 +237,7 @@ function Login(props) {
                   classes.googleButtonCreating
                 )}
               >
-                {/* <img src={google} alt="google" className={classes.googleIcon} /> */}
+                <Google className={classes.googleIcon} />
                 &nbsp;Sign in with Google
               </Button>
             </React.Fragment>
