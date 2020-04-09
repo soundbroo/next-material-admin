@@ -1,30 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Router from "next/router";
+import fetch from "isomorphic-unfetch";
+import nextCookie from "next-cookies";
 
-// context
-import { useUserState } from "../context/UserContext";
+import { withAuthSync } from "../utils/auth";
 
-export default function Main({ children }) {
-  // global
-  var { isAuthenticated } = useUserState();
+const Main = (props) => <>{props.children}</>;
 
-  const router = useRouter();
+Main.getInitialProps = async (ctx) => {
+  console.log("Main", ctx);
+};
 
-  React.useEffect(() => {
-    console.log("isAuthenticated", isAuthenticated);
-    if (isAuthenticated && router.pathname === "/") {
-      Router.push("/dashboard");
-    }
-    if (router.pathname === "/login") {
-      if (isAuthenticated) {
-        Router.push("/dashboard");
-      }
-    }
-    if (!isAuthenticated) {
-      Router.push("/login");
-    }
-  }, [isAuthenticated, router.pathname]);
-
-  return <>{children}</>;
-}
+export default withAuthSync(Main);

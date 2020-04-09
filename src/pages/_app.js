@@ -1,6 +1,8 @@
-import React from "react";
-import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import Router from "next/router";
 import Head from "next/head";
+import fetch from "isomorphic-unfetch";
+import nextCookie from "next-cookies";
 
 import "font-awesome/css/font-awesome.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,49 +16,68 @@ import { CssBaseline } from "@material-ui/core";
 import themes from "../themes";
 
 import { LayoutProvider } from "../context/LayoutContext";
-import { UserProvider } from "../context/UserContext";
 
-import Layout from "../components/Layout/Layout";
 import Main from "../components/Main";
 
+import { withAuthSync } from "../utils/auth";
+
 const CustomApp = ({ Component, pageProps }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-  const router = useRouter();
-  const login = router.pathname === "/login";
+  useEffect(() => {
+    if (Router.pathname === "/") Router.push("/dashboard");
+  }, []);
   return (
     <>
       <Head>
         <title>Next material admin</title>
       </Head>
       <LayoutProvider>
-        <UserProvider>
-          <StylesProvider injectFirst>
-            <MuiThemeProvider theme={themes.mui}>
-              <CssBaseline />
-              <ThemeProvider theme={themes.styled}>
-                {!login ? (
-                  <Layout>
-                    <Main>
-                      <Component {...pageProps} />
-                    </Main>
-                  </Layout>
-                ) : (
-                  <Main>
-                    <Component {...pageProps} />
-                  </Main>
-                )}
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StylesProvider>
-        </UserProvider>
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={themes.mui}>
+            <CssBaseline />
+            <ThemeProvider theme={themes.styled}>
+              <Main>
+                <Component {...pageProps} />
+              </Main>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
       </LayoutProvider>
     </>
   );
 };
 
-export default CustomApp;
+CustomApp.getInitialProps = async (ctx) => {
+  const { token } = nextCookie(ctx);
+  console.log("ctx", ctx);
+  const url = "/api/profile";
+
+  const redirectOnError = () =>
+    typeof window !== "undefined"
+      ? Router.push("/login")
+      : ctx.res.writeHead(302, { Location: "/login" }).end();
+
+  try {
+    const response = await fetch(url, {
+      credentials: "include",
+      headers: {
+        Authorization: JSON.stringify({ token }),
+      },
+    });
+
+    if (response.ok) {
+      return;
+    } else {
+      return await redirectOnError();
+    }
+  } catch (error) {
+    return redirectOnError();
+  }
+};
+
+export default withAuthSync(CustomApp);

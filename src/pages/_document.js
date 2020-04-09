@@ -36,7 +36,7 @@ export default class MyDocument extends Document {
     return (
       <html lang="en">
         <Head></Head>
-        <body>
+        <body style={{ padding: 12 }}>
           <Main />
           <NextScript />
         </body>

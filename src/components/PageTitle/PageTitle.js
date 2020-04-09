@@ -7,10 +7,11 @@ import useStyles from "./styles";
 // components
 import { Typography } from "../Wrappers";
 
+import { logout } from "../../utils/auth";
+
 export default function PageTitle(props) {
   var classes = useStyles();
-
-  console.log(classes);
+  const handleLogout = () => logout();
 
   return (
     <div className={classes.pageTitleContainer}>
@@ -23,6 +24,7 @@ export default function PageTitle(props) {
           variant="contained"
           size="large"
           color="secondary"
+          onClick={handleLogout}
         >
           {props.button}
         </Button>
