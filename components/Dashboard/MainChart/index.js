@@ -78,6 +78,7 @@ const MainChart = () => {
             </div>
           </div>
           <Select
+            autoWidth
             value={mainChartState}
             onChange={(e) => setMainChartState(e.target.value)}
             input={
@@ -89,7 +90,6 @@ const MainChart = () => {
                 }}
               />
             }
-            autoWidth
           >
             <MenuItem value="daily">Daily</MenuItem>
             <MenuItem value="weekly">Weekly</MenuItem>

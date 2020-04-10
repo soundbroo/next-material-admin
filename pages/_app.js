@@ -28,9 +28,6 @@ const CustomApp = ({ Component, ctx }) => {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-  useEffect(() => {
-    if (Router.pathname === "/") Router.push("/dashboard");
-  }, []);
 
   useEffect(() => logoutEffect(syncLogout), []);
 

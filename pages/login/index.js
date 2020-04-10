@@ -16,12 +16,12 @@ import useStyles from "components/Login/styles";
 import Logo from "images/logo.svg";
 
 const Login = (props) => {
-  var classes = useStyles();
+  const classes = useStyles();
 
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [loginValue, setLoginValue] = useState("");
-  var [passwordValue, setPasswordValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [loginValue, setLoginValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
 
   const handleLogin = async () => {
     const url = "/api/login";

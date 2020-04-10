@@ -12,16 +12,23 @@ import useStyles from "components/Dashboard/BigStat/styles";
 import Widget from "components/Widget/";
 import { Typography } from "components/Wrappers";
 
-export default function BigStat(props) {
-  var { product, total, color, registrations, bounce } = props;
-  var classes = useStyles();
-  var theme = useTheme();
+const BigStat = (props) => {
+  const { product, total, color, registrations, bounce } = props;
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const getRandomData = () => {
+    return Array(7)
+      .fill()
+      .map(() => ({ value: Math.floor(Math.random() * 10) + 1 }));
+  };
 
   // local
-  var [value, setValue] = useState("daily");
+  const [value, setValue] = useState("daily");
 
   return (
     <Widget
+      upperTitle
       header={
         <div className={classes.title}>
           <Typography variant="h5">{product}</Typography>
@@ -43,7 +50,6 @@ export default function BigStat(props) {
           </Select>
         </div>
       }
-      upperTitle
     >
       <div className={classes.totalValueContainer}>
         <div className={classes.totalValue}>
@@ -109,12 +115,6 @@ export default function BigStat(props) {
       </div>
     </Widget>
   );
-}
+};
 
-// #######################################################################
-
-function getRandomData() {
-  return Array(7)
-    .fill()
-    .map(() => ({ value: Math.floor(Math.random() * 10) + 1 }));
-}
+export default BigStat;

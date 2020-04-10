@@ -7,11 +7,11 @@ import useStyles from "components/UserAvatar/styles";
 // components
 import { Typography } from "components/Wrappers";
 
-export default function UserAvatar({ color = "primary", ...props }) {
-  var classes = useStyles();
-  var theme = useTheme();
+const UserAvatar = ({ color = "primary", ...props }) => {
+  const classes = useStyles();
+  const theme = useTheme();
 
-  var letters = props.name
+  const letters = props.name
     .split(" ")
     .map((word) => word[0])
     .join("");
@@ -24,4 +24,6 @@ export default function UserAvatar({ color = "primary", ...props }) {
       <Typography className={classes.text}>{letters}</Typography>
     </div>
   );
-}
+};
+
+export default UserAvatar;

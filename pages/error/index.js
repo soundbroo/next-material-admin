@@ -8,8 +8,8 @@ import useStyles from "components/Error/styles";
 // logo
 import Logo from "images/logo.svg";
 
-export default function Error() {
-  var classes = useStyles();
+const Error = () => {
+  const classes = useStyles();
 
   return (
     <Grid container className={classes.container}>
@@ -51,4 +51,6 @@ export default function Error() {
       </Paper>
     </Grid>
   );
-}
+};
+
+export default Error;

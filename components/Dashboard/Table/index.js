@@ -16,8 +16,8 @@ const states = {
   declined: "secondary",
 };
 
-export default function TableComponent({ data }) {
-  var keys = Object.keys(data[0]).map((i) => i.toUpperCase());
+const TableComponent = ({ data }) => {
+  const keys = Object.keys(data[0]).map((i) => i.toUpperCase());
   keys.shift(); // delete "id" key
 
   return (
@@ -53,4 +53,6 @@ export default function TableComponent({ data }) {
       </TableBody>
     </Table>
   );
-}
+};
+
+export default TableComponent;

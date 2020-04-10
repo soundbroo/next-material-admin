@@ -9,7 +9,7 @@ import { useTheme, makeStyles } from "@material-ui/styles";
 import classnames from "classnames";
 
 // styles
-var useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   badge: {
     fontWeight: 600,
     height: 16,
@@ -17,10 +17,10 @@ var useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Badge({ children, colorBrightness, color, ...props }) {
-  var classes = useStyles();
-  var theme = useTheme();
-  var Styled = createStyled({
+const Badge = ({ children, colorBrightness, color, ...props }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const Styled = createStyled({
     badge: {
       backgroundColor: getColor(color, theme, colorBrightness),
     },
@@ -40,17 +40,17 @@ function Badge({ children, colorBrightness, color, ...props }) {
       )}
     </Styled>
   );
-}
+};
 
-function Typography({
+const Typography = ({
   children,
   weight,
   size,
   colorBrightness,
   color,
   ...props
-}) {
-  var theme = useTheme();
+}) => {
+  const theme = useTheme();
 
   return (
     <TypographyBase
@@ -64,12 +64,12 @@ function Typography({
       {children}
     </TypographyBase>
   );
-}
+};
 
-function Button({ children, color, className, ...props }) {
-  var theme = useTheme();
+const Button = ({ children, color, className, ...props }) => {
+  const theme = useTheme();
 
-  var Styled = createStyled({
+  const Styled = createStyled({
     root: {
       color: getColor(color, theme),
     },
@@ -117,7 +117,7 @@ function Button({ children, color, className, ...props }) {
       )}
     </Styled>
   );
-}
+};
 
 export { Badge, Typography, Button };
 
@@ -143,7 +143,7 @@ function getFontWeight(style) {
 }
 
 function getFontSize(size, variant = "", theme) {
-  var multiplier;
+  let multiplier;
 
   switch (size) {
     case "sm":
@@ -163,7 +163,7 @@ function getFontSize(size, variant = "", theme) {
       break;
   }
 
-  var defaultSize =
+  const defaultSize =
     variant && theme.typography[variant]
       ? theme.typography[variant].fontSize
       : theme.typography.fontSize + "px";
@@ -172,7 +172,7 @@ function getFontSize(size, variant = "", theme) {
 }
 
 function createStyled(styles, options) {
-  var Styled = function(props) {
+  const Styled = function(props) {
     const { children, ...other } = props;
     return children(other);
   };
