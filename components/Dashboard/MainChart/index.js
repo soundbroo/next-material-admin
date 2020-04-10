@@ -47,7 +47,6 @@ const MainChart = () => {
 
   useEffect(() => {
     setMainChartData(generateMainChartData());
-    console.log(getMainChartDataContext());
   }, []);
 
   return (
