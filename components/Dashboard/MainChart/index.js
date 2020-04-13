@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Select, OutlinedInput, MenuItem } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
-import useStyles from "../styles";
+import useStyles from "components/Dashboard/styles";
 import Widget from "components/Widget/";
 import { Typography } from "components/Wrappers";
 import Dot from "components/Dot";
@@ -12,8 +12,10 @@ import {
   Line,
   Area,
   YAxis,
-  XAxis,
+  XAxis
 } from "recharts";
+
+import HeaderLabel from "components/Dashboard/MainChart/HeaderLabel";
 
 import useData from "hooks/useData";
 
@@ -23,7 +25,7 @@ const MainChart = () => {
 
   const {
     getMainChartData: getMainChartDataContext,
-    setMainChartData,
+    setMainChartData
   } = useData();
 
   const [mainChartState, setMainChartState] = useState("monthly");
@@ -38,7 +40,7 @@ const MainChart = () => {
       resultArray.push({
         tablet: tablet[i].value,
         desktop: desktop[i].value,
-        mobile: mobile[i].value,
+        mobile: mobile[i].value
       });
     }
 
@@ -58,35 +60,20 @@ const MainChart = () => {
             Daily Line Chart
           </Typography>
           <div className={classes.mainChartHeaderLabels}>
-            <div className={classes.mainChartHeaderLabel}>
-              <Dot color="warning" />
-              <Typography className={classes.mainChartLegentElement}>
-                Tablet
-              </Typography>
-            </div>
-            <div className={classes.mainChartHeaderLabel}>
-              <Dot color="primary" />
-              <Typography className={classes.mainChartLegentElement}>
-                Mobile
-              </Typography>
-            </div>
-            <div className={classes.mainChartHeaderLabel}>
-              <Dot color="primary" />
-              <Typography className={classes.mainChartLegentElement}>
-                Desktop
-              </Typography>
-            </div>
+            <HeaderLabel color="warning" label="Tablet" />
+            <HeaderLabel color="primary" label="Mobile" />
+            <HeaderLabel color="primary" label="Desktop" />
           </div>
           <Select
             autoWidth
             value={mainChartState}
-            onChange={(e) => setMainChartState(e.target.value)}
+            onChange={e => setMainChartState(e.target.value)}
             input={
               <OutlinedInput
                 labelWidth={0}
                 classes={{
                   notchedOutline: classes.mainChartSelectRoot,
-                  input: classes.mainChartSelect,
+                  input: classes.mainChartSelect
                 }}
               />
             }
@@ -110,7 +97,7 @@ const MainChart = () => {
             tickLine={false}
           />
           <XAxis
-            tickFormatter={(i) => i + 1}
+            tickFormatter={i => i + 1}
             tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
             stroke={theme.palette.text.hint + "80"}
             tickLine={false}
@@ -138,7 +125,7 @@ const MainChart = () => {
             dot={{
               stroke: theme.palette.warning.dark,
               strokeWidth: 2,
-              fill: theme.palette.warning.main,
+              fill: theme.palette.warning.main
             }}
           />
         </ComposedChart>
